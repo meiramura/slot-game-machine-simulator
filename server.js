@@ -26,3 +26,11 @@ app.get('*', (req, res) => {
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 }); 
+
+// server.js (Express)
+app.get('/api/delay', (req, res) => {
+    const delay = Math.floor(Math.random() * 5) + 1;
+    setTimeout(() => {
+        res.json({ delay });
+    }, delay * 1000);
+});

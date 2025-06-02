@@ -73,7 +73,7 @@ document.getElementById('startButton').addEventListener('click', async () => {
 
     // Start server request
     try {
-        const response = await fetch('server.php');
+        const response = await fetch('/api/delay');
         serverResponse = await response.json();
     } catch (error) {
         console.error('Server error:', error);
