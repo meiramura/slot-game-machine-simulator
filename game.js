@@ -20,9 +20,9 @@ const config = {
 
 // Initialize PIXI Application
 const app = new PIXI.Application({
-    width: 1080,
-    height: 1920,
-    backgroundColor: 0x000000,
+    width: config.reels * config.symbolSize,
+    height: config.rows * config.symbolSize,
+    backgroundColor: 0xffffff,
     resolution: window.devicePixelRatio || 1,
     autoDensity: true
 });
@@ -48,7 +48,7 @@ for (let i = 0; i < config.reels; i++) {
     reels.push(reel);
 
     const reelSymbols = [];
-    for (let j = 0; j < config.rows + 2; j++) { // +2 for bounce effect
+    for (let j = 0; j < config.rows; j++) {
         const symbol = PIXI.Sprite.from(config.symbols[Math.floor(Math.random() * config.symbols.length)]);
         symbol.width = config.symbolSize;
         symbol.height = config.symbolSize;
@@ -77,7 +77,7 @@ document.getElementById('startButton').addEventListener('click', async () => {
         serverResponse = await response.json();
     } catch (error) {
         console.error('Server error:', error);
-        serverResponse = { delay: 3 }; // Fallback delay
+        serverResponse = { delay: 1 }; // Fallback delay
     }
 
     // Start spinning animation
@@ -159,14 +159,18 @@ function stopSpin() {
 
 // Handle window resize
 function resize() {
-    const container = document.getElementById('gameContainer');
+    // Масштабируем canvas, если экран меньше поля
+    const w = window.innerWidth;
+    const h = window.innerHeight - 100; // 100px запас для кнопки и текста сверху
+
     const scale = Math.min(
-        container.clientWidth / app.screen.width,
-        container.clientHeight / app.screen.height
+        w / (config.reels * config.symbolSize),
+        h / (config.rows * config.symbolSize),
+        1 // не увеличивать больше 1
     );
 
-    app.renderer.resize(app.screen.width * scale, app.screen.height * scale);
-    app.stage.scale.set(scale);
+    app.renderer.view.style.width = `${config.reels * config.symbolSize * scale}px`;
+    app.renderer.view.style.height = `${config.rows * config.symbolSize * scale}px`;
 }
 
 window.addEventListener('resize', resize);

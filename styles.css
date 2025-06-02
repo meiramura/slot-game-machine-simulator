@@ -8,7 +8,7 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    background: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -60,4 +60,11 @@ body {
 #startButton:disabled {
     background: #ccc;
     cursor: not-allowed;
+}
+
+#gameContainer canvas {
+    display: block;
+    margin: 40px auto 0 auto; /* сверху отступ для текста и кнопки */
+    box-shadow: 0 0 10px #ccc;
+    border-radius: 16px;
 }
