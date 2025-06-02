@@ -9,8 +9,7 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 
 // Serve static files
-app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(express.static(__dirname));
 // Simulate server delay endpoint
 app.get('/api/delay', (req, res) => {
     const delay = Math.floor(Math.random() * 5) + 1;
@@ -21,7 +20,7 @@ app.get('/api/delay', (req, res) => {
 
 // Serve index.html for all other routes
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.listen(port, () => {
